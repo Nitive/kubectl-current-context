@@ -15,7 +15,7 @@ function assertEqual() {
   fi
 }
 
-KUBECONFIG="$root/kubeconfigs/one-cluster.yaml:$root/kubeconfigs/two-clusters.yaml:"
+KUBECONFIG="$root/kubeconfigs/one-cluster.yaml:$root/kubeconfigs/two-clusters.yaml"
 
 expectedContext="$(kubectl config current-context)"
 expectedNamespace="$(kubectl config view --minify --output 'jsonpath={..namespace}')"
