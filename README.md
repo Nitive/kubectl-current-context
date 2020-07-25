@@ -10,6 +10,12 @@ $ kubectl-current-context -o slug
 my-cluster/default
 ```
 
+Custom separator with `-s` flag
+```
+$ kubectl-current-context -s='⎈ '
+my-cluster⎈default
+```
+
 Just context
 ```
 $ kubectl-current-context -o context

@@ -12,6 +12,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
+// Context is struct for parsing context section of kubeconfig file
 type Context struct {
 	Context struct {
 		Namespace string `yaml:"namespace"`
@@ -19,7 +20,7 @@ type Context struct {
 	Name string `yaml:"name"`
 }
 
-// Kubeconfig is struct for parsing Kubeconfig file
+// Kubeconfig is struct for parsing kubeconfig file
 type Kubeconfig struct {
 	CurrentContext string    `yaml:"current-context"`
 	Contexts       []Context `yaml:"contexts"`
@@ -65,6 +66,7 @@ func main() {
 	}
 
 	outputFlag := flag.String("o", "slug", `Output values. Either "json", "context", "namespace" or "slug" (context/namespace)`)
+	separatorFlag := flag.String("s", "/", `Separator for slug. Create stylish prompt with -s='⎈ '`)
 	flag.Parse()
 
 	validationError := validateOutputFlag(*outputFlag)
@@ -74,6 +76,7 @@ func main() {
 	}
 
 	output := *outputFlag
+	separator := *separatorFlag
 
 	kubeconfigFilePaths := strings.Split(kubeconfigRawEnv, ":")
 	for i, path := range kubeconfigFilePaths {
@@ -122,7 +125,7 @@ func main() {
 	}
 
 	if output == "slug" {
-		fmt.Printf("%s/%s", currentContext, currentNamespace)
+		fmt.Printf("%s%s%s", currentContext, separator, currentNamespace)
 	}
 
 	if output == "json" {
