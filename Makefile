@@ -9,3 +9,6 @@ benchmark-go:
 
 benchmark-kubectl:
 	@ hyperfine --warmup 3 -m 100 'kubectl config current-context && kubectl config view --minify --output "jsonpath={..namespace}"'
+
+test:
+	./tests/test.sh 'go run main.go'

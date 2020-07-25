@@ -82,14 +82,14 @@ func main() {
 		kubeconfigFilePaths[i] = strings.TrimSpace(path)
 	}
 
-	parsedKubeconfigs := []Kubeconfig{}
+	parsedKubeconfigs := make([]Kubeconfig, len(kubeconfigFilePaths))
 
 	var wg sync.WaitGroup
 	wg.Add(len(kubeconfigFilePaths))
 
-	for _, file := range kubeconfigFilePaths {
+	for i, file := range kubeconfigFilePaths {
 		// Parse all files, skip files with syntax errors
-		go func(fileName string) {
+		go func(fileName string, i int) {
 			defer wg.Done()
 
 			fileContext, err := ioutil.ReadFile(fileName)
@@ -109,8 +109,8 @@ func main() {
 				return
 			}
 
-			parsedKubeconfigs = append(parsedKubeconfigs, config)
-		}(file)
+			parsedKubeconfigs[i] = config
+		}(file, i)
 	}
 
 	wg.Wait()
