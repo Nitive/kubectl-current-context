@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"strings"
 	"sync"
@@ -76,7 +75,6 @@ func main() {
 
 	output := *outputFlag
 
-	debugMode := os.Getenv("DEBUG") != ""
 	kubeconfigFilePaths := strings.Split(kubeconfigRawEnv, ":")
 	for i, path := range kubeconfigFilePaths {
 		kubeconfigFilePaths[i] = strings.TrimSpace(path)
@@ -94,18 +92,14 @@ func main() {
 
 			fileContext, err := ioutil.ReadFile(fileName)
 			if err != nil {
-				if debugMode {
-					log.Fatal(err)
-				}
+				fmt.Fprintf(os.Stderr, "Error reading %s %v", fileName, err)
 				return
 			}
 
 			var config Kubeconfig
 			err = yaml.Unmarshal(fileContext, &config)
 			if err != nil {
-				if debugMode {
-					log.Fatal(err)
-				}
+				fmt.Fprintf(os.Stderr, "Error parsing %s %v", fileName, err)
 				return
 			}
 
