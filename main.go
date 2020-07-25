@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 	"sync"
@@ -93,19 +92,20 @@ func main() {
 		go func(fileName string, i int) {
 			defer wg.Done()
 
-			fileContext, err := ioutil.ReadFile(fileName)
+			var config Kubeconfig
+			file, err := os.Open(fileName)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "Error reading %s %v", fileName, err)
+				fmt.Fprintf(os.Stderr, "Error opening file %s %v", fileName, err)
 				return
 			}
 
-			var config Kubeconfig
-			err = yaml.Unmarshal(fileContext, &config)
+			err = yaml.NewDecoder(file).Decode(&config)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Error parsing %s %v", fileName, err)
 				return
 			}
 
+			file.Close()
 			parsedKubeconfigs[i] = config
 		}(file, i)
 	}
