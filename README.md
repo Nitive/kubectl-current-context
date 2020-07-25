@@ -63,5 +63,4 @@ Benchmark #1: ./kubectl-current-context -o json
 
 # Installation
 
-TODO: krew
-TODO: curl
+Download [latest release](https://github.com/Nitive/kubectl-current-context/releases/latest) binary and put it in your /usr/local/bin directory
