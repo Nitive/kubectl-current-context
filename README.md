@@ -2,6 +2,9 @@
 
 Get current kubectl context and namespace **super fast**. Useful for shell prompts.
 
+Put kubectl context and namespace in your shell prompt. Looks great, isn't it?
+![](https://s.csssr.ru/U09LGPMEU/20200801190416.png)
+
 ## Options
 
 Get context/namespace
