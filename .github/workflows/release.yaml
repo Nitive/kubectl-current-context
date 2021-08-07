@@ -15,6 +15,9 @@ jobs:
       matrix:
         goos: [linux, windows, darwin]
         goarch: [amd64, arm]
+        exclude:
+          - goos: darwin
+            goarch: arm
     steps:
       - uses: actions/checkout@v2
 
