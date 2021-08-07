@@ -12,7 +12,7 @@ my-cluster/default
 
 Custom separator with `-s` flag
 ```
-$ kubectl-current-context -s='⎈ '
+$ kubectl-current-context -s='⎈'
 my-cluster⎈default
 ```
 
@@ -49,7 +49,7 @@ Benchmark #1: kubectl config current-context && kubectl config view --minify --o
   Range (min … max):   123.3 ms … 164.4 ms    100 runs
 ```
 
-This implementation takes only ~7ms — 19 times less
+This implementation takes only ~7ms — 1884% faster
 
 ```
 $ kubectl-current-context -o json
