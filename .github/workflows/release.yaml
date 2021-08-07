@@ -18,13 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set RELEASE_VERSION
-        id: get_version
-        run: echo ::set-output name=RELEASE_VERSION::${GITHUB_REF/refs\/tags\//}
-
-      - uses: wangyoucao577/go-release-action@v1.5
+      - uses: wangyoucao577/go-release-action@v1.19
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
-          goversion: "1.14"
+          goversion: "1.16"
